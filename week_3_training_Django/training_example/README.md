@@ -34,8 +34,8 @@ This repository contains the code and resources for a prediction project develop
 
 1. **Clone the Repository:**
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/Yohannes90/training.git
+   cd ./week_3_trainging_Django/training_assignment
    ```
 
 2. **Set up Virtual Environment:**
