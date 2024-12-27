@@ -1,0 +1,34 @@
+### TEST public route works
+GET http://127.0.0.1:5000/public
+Content-Type: application/json
+
+###
+
+
+### TEST protected route without Authorization token in header
+GET http://127.0.0.1:5000/protected
+Content-Type: application/json
+
+###
+
+
+### TEST login route properly works and get JWT token
+# @name login
+GET http://127.0.0.1:5000/login
+Authorization: Basic SmhvbkRvZTpwYXNzd29yZA==
+Content-Type: application/json
+
+# Note: "SmhvbkRvZTpwYXNzd29yZA==" is the Base64-encoded value of "JhonDoe:password".
+
+### Store the token from the login response
+@jwt-token={{login.response.body.token}}
+
+###
+
+
+### TEST protected route with Authorization token in header
+GET http://127.0.0.1:5000/protected
+Authorization: Bearer {{jwt-token}}
+Content-Type: application/json
+
+###
