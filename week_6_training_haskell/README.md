@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains a series of Haskell tasks that demonstrate key functional programming concepts including `map`, `filter`, `foldl`, `foldr`, `sum`, `product`, `count`, and function composition.
+This repository contains a series of Haskell tasks that demonstrate key functional programming concepts including `map`, `filter`, `foldl`, `foldr`, `sum`, `product`, `count`, function composition(`.`), and counting the occurrences of specific elements in a list(`countOccerence`).
 
 ## Resources
 
@@ -145,6 +145,24 @@ length' xs = sum' [1 | _ <- xs]
 
 ```haskell
 length' [1, 2, 3]           -- 3
+```
+
+---
+
+#### 7.2. Count Occurrence of a Given Integer
+
+`countOccerence` counts how many times a given integer appears in a list.
+
+```haskell
+countOccerence :: [Int] -> Int -> Int
+countOccerence [] _ = 0
+countOccerence xs z = sum' [1 | x <- xs, x == z]
+```
+
+**Example Usage:**
+
+```haskell
+countOccerence [2, 2, 2, 3, 4] 2   -- 3
 ```
 
 ---
