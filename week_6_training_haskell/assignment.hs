@@ -64,6 +64,12 @@ length' xs = sum' [1 | _ <- xs]
 
 -- length' [1, 2, 3]           -- 3
 
+-- 7.2. count occurence of a given int in a list
+countOccerence :: [Int] -> Int -> Int
+countOccerence [] _ = 0
+countOccerence xs z = sum' [1 | x <- xs, x == z]
+
+-- countOccerence (2:2:[2..5]) 2       -- 3
 
 -- 8. compose
 -- note: In Haskell, compose refers to the composition of two functions.
