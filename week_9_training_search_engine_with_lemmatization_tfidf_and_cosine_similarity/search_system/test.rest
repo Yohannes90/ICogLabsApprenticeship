@@ -1,0 +1,64 @@
+### Test home page
+GET http://localhost:5000/
+
+### Add text to corpus
+POST http://localhost:5000/corpus/add
+Content-Type: application/x-www-form-urlencoded
+
+text=This is a sample text to add to the corpus&title=Sample Text
+
+### Add URL to corpus
+POST http://localhost:5000/corpus/add
+Content-Type: application/x-www-form-urlencoded
+
+url=https://example.com
+
+### Add file to corpus
+POST http://localhost:5000/corpus/add
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="sample.txt"
+Content-Type: text/plain
+
+< ./sample.txt
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Get all corpus items
+GET http://localhost:5000/corpus
+
+### Search corpus
+POST http://localhost:5000/search
+Content-Type: application/json
+
+{
+    "query": "sample search query",
+    "limit": 5
+}
+
+### Remove item from corpus
+DELETE http://localhost:5000/corpus/remove/Sample Text
+
+### Test error cases - Empty text input
+POST http://localhost:5000/corpus/add
+Content-Type: application/x-www-form-urlencoded
+
+text=
+
+### Test error cases - Invalid URL
+POST http://localhost:5000/corpus/add
+Content-Type: application/x-www-form-urlencoded
+
+url=not-a-valid-url
+
+### Test error cases - Empty search query
+POST http://localhost:5000/search
+Content-Type: application/json
+
+{
+    "query": "",
+    "limit": 5
+}
+
+### Test error cases - Remove non-existent source
+DELETE http://localhost:5000/corpus/remove/NonExistentSource
