@@ -5,7 +5,7 @@
 This document covers the Week 9 assignment for building a simple search engine that leverages **Lemmatization**, **TF-IDF**, and **Cosine Similarity** to analyze and retrieve relevant documents based on user input. The assignment involves improving a search system by addressing an issue with the search for the word “loved” and creating a **web-based search system**.
 
 For more details on the training content, refer to the training notebook:
-**[1. Training: Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb](1.%20Training:%20Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb)**
+**[1. Training: Search Engine with Lemmatization, TF-IDF, and Cosine Similarity.ipynb](./1.Training:%20Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb)**
 
 
 ## Assignment Questions
@@ -14,7 +14,7 @@ For more details on the training content, refer to the training notebook:
 In this part of the assignment, we were tasked with investigating and fixing an issue where the search for “loved” did not return the expected results. This was due to preprocessing steps that affected the similarity calculation. The fix involved using a lemmatization technique to ensure that both "love" and "loved" are treated similarly, enhancing the search functionality.
 
 - **Answer and Details:** The complete solution and implementation for this assignment can be found in the file:
-  **[2. Assignment 1: Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb](2.%20Assignment%201:%20Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb)**
+  **[2. Assignment 1: Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb](./2.Assignment%201:%20Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb)**
 
 
 ### Assignment 2: Web-Based Search System
