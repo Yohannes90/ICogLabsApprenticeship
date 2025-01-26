@@ -31,15 +31,23 @@ The goal of this assignment was to build a **web-based search system** that allo
 ## Folder Structure
 
 ```
-|-- 1. Training: Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb
-|-- 2. Assignment 1: Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb
+|-- 1.Training:\ Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb
+|-- 2.Assignment\ 1:\ Search_Engine_with_Lemmatization,_TF_IDF,_and_Cosine_Similarity.ipynb
 |-- README.md
-|-- search_system
-|   |-- app.py                      # Flask app entry point
-|   |-- routes.py                   # Routes for handling requests
-|   |-- utils.py                    # Utility functions (e.g., preprocessing, scraping)
-|   |-- static/
-|   |   `-- index.html              # Static front-end for search system
-|   |-- uploads/
-|   |-- README.md
+`-- search_system
+    |-- app.py
+    |-- README.md
+    |-- requirements.txt
+    |-- routes.py
+    |-- screenshots
+    |   |-- adding_corpus.png
+    |   |-- opening_website_on_localhost.png
+    |   `-- searching_results.png
+    |-- static
+    |   `-- index.html
+    |-- test.rest
+    |-- uploads
+    `-- utils.py
+
+4 directories, 13 files
 ```
