@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corpus Manager</title>
+    <!-- Folder SVG Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3Cpath d='M3 3h4l2 3h6l2-3h4c1.1 0 1.99.9 1.99 2L21 18c0 1.1-.89 2-1.99 2H3c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2zm0 14h18V5H3v12z' fill='%23FFFFFF'/%3E%3C/svg%3E"
+        type="image/svg+xml" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 h-screen flex justify-center items-center p-6">
+    <div
+        class="container mx-auto bg-white rounded-lg shadow-md p-6 grid grid-cols-12 gap-8 w-full h-full max-w-[1800px]">
+        <!-- Left Section -->
+        <div class="col-span-3 space-y-10 bg-gray-100 rounded-lg p-4 shadow-md">
+            <h2 class="text-lg font-semibold">Add Corpus</h2>
+
+            <!-- Add Text Corpus -->
+            <div>
+                <label for="corpus-text" class="block text-sm font-medium">Plain Text Corpus</label>
+                <input id="corpus-text" type="text" placeholder="Enter plain text..."
+                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <button id="addTextCorpusBtn"
+                    class="mt-2 w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                    Add Text
+                </button>
+            </div>
+
+            <!-- Add File Corpus -->
+            <div>
+                <label for="corpus-file" class="block text-sm font-medium">File Corpus</label>
+                <input id="corpus-file" type="file" accept=".pdf,.docx,.txt"
+                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <p class="text-xs text-gray-500">Accepted: .txt, .docx, .pdf</p>
+                <button id="addFileCorpusBtn"
+                    class="mt-2 w-full px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+                    Add File
+                </button>
+            </div>
+
+            <!-- Add Link Corpus -->
+            <div>
+                <label for="corpus-link" class="block text-sm font-medium">Website Link Corpus</label>
+                <input id="corpus-link" type="url" placeholder="Enter website URL..."
+                    class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <button id="addLinkCorpusBtn"
+                    class="mt-2 w-full px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition">
+                    Add Link
+                </button>
+            </div>
+        </div>
+
+        <!-- Middle Section -->
+        <div class="col-span-6 bg-gray-200 rounded-lg p-6 shadow-md space-y-6">
+            <h2 class="text-lg font-semibold">Search Corpus</h2>
+
+            <!-- Search Bar -->
+            <div class="space-y-2">
+                <div class="flex items-center space-x-2">
+                    <input id="search" type="text" placeholder="Enter search query..."
+                        class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <select id="limit"
+                        class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="1">1 Result</option>
+                        <option value="2">2 Results</option>
+                        <option value="3">3 Results</option>
+                        <option value="5">5 Results</option>
+                        <option value="10">10 Results</option>
+                    </select>
+                    <button id="searchBtn"
+                        class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                        Search
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div id="results" class="bg-white p-4 border rounded-lg max-h-[70vh] overflow-y-auto">
+                <p class="text-gray-500 text-center">Search results will appear here...</p>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="col-span-3 bg-gray-100 rounded-lg p-4 shadow-md space-y-4">
+            <h2 class="text-lg font-semibold">Corpus Elements</h2>
+
+            <ul id="corpusList" class="bg-white p-4 border rounded-lg max-h-[70vh] overflow-y-auto space-y-2">
+                <li class="text-gray-500 text-center">No elements in the corpus...</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Base URL for Flask backend
+        const BASE_URL = "http://127.0.0.1:5000";
+
+        // Add Text Corpus
+        document.getElementById("addTextCorpusBtn").addEventListener("click", async () => {
+            const text = document.getElementById("corpus-text").value;
+
+            if (!text) {
+                alert("Please enter some text.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("text", text);
+
+            try {
+                const response = await fetch(`${BASE_URL}/corpus/add`, {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.json();
+                if (result.message) {
+                    alert(result.message);
+                    fetchCorpus(); // Reload corpus list
+                    document.getElementById("corpus-text").value = "";
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+        // Add File Corpus
+        document.getElementById("addFileCorpusBtn").addEventListener("click", async () => {
+            const file = document.getElementById("corpus-file").files[0];
+
+            if (!file) {
+                alert("Please select a file.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            try {
+                const response = await fetch(`${BASE_URL}/corpus/add`, {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.json();
+                if (result.message) {
+                    alert(result.message);
+                    fetchCorpus(); // Reload corpus list
+                    document.getElementById("corpus-file").value = "";
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+        // Add Link Corpus
+        document.getElementById("addLinkCorpusBtn").addEventListener("click", async () => {
+            const url = document.getElementById("corpus-link").value;
+
+            if (!url) {
+                alert("Please enter a valid URL.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("url", url);
+
+            try {
+                const response = await fetch(`${BASE_URL}/corpus/add`, {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.json();
+                if (result.message) {
+                    alert(result.message);
+                    fetchCorpus(); // Reload corpus list
+                    document.getElementById("corpus-link").value = "";
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+        // Fetch Corpus Elements
+        async function fetchCorpus() {
+            try {
+                const response = await fetch(`${BASE_URL}/corpus`);
+                const corpus = await response.json();
+                const corpusList = document.getElementById("corpusList");
+                corpusList.innerHTML = "";
+
+                if (corpus.length === 0) {
+                    corpusList.innerHTML =
+                        '<li class="text-gray-500 text-center">No elements in the corpus...</li>';
+                    return;
+                }
+
+                corpus.forEach((item) => {
+                    const card = document.createElement("div");
+                    card.className = `p-4 border rounded-lg shadow-lg mb-4 space-y-2 ${item.method === "File Upload"
+                            ? "bg-green-100"
+                            : item.method === "Web Scraping"
+                                ? "bg-yellow-100"
+                                : "bg-blue-100"
+                        }`;
+
+                    card.innerHTML = `
+                        <p><strong>Method:</strong> ${item.method.charAt(0).toUpperCase() + item.method.slice(1)}</p>
+                        <p class="font-semibold text-lg">${item.source.substring(0, 25)}</p>
+                        <p><strong>Total Chunks:</strong> ${item.chunk_count}</p>
+                        <ul class="space-y-1">
+                            <li class="text-sm"><strong>${item.chunk_id}st Chunk:</strong> ${item.chunk.substring(0, 100) + "..."}</li>
+                        </ul>
+                        <div class="flex justify-end space-x-2">
+                            <button
+                                class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                                onclick="removeCorpus('${item.source}')"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    `;
+                    corpusList.appendChild(card);
+                });
+            } catch (err) {
+                console.error("Error fetching corpus elements:", err);
+            }
+        }
+
+
+        // Remove Corpus Element by Source
+        async function removeCorpus(source) {
+            alert(source)
+            try {
+                const response = await fetch(`${BASE_URL}/corpus/remove/${source}`, {
+                    method: "DELETE",
+                });
+
+                const result = await response.json();
+                if (result.message) {
+                    alert(result.message);
+                    fetchCorpus(); // Reload corpus list
+                } else if (result.error) {
+                    alert(result.error); // Display error if source not found
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+
+        // Search function
+        document.getElementById("searchBtn").addEventListener("click", async () => {
+            const query = document.getElementById("search").value.trim();
+            const limit = parseInt(document.getElementById("limit").value, 10);
+            const resultsContainer = document.getElementById("results");
+            resultsContainer.innerHTML = ""; // Clear previous results
+
+            try {
+                // Validate query
+                if (!query) {
+                    resultsContainer.innerHTML =
+                        '<p class="text-red-500 text-center">Query cannot be empty or whitespace-only.</p>';
+                    return;
+                }
+
+                const response = await fetch(`${BASE_URL}/search`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query, limit }),
+                });
+
+                const results = await response.json();
+
+                // Handle errors
+                if (results.error) {
+                    resultsContainer.innerHTML = `<p class="text-red-500 text-center">${results.error}</p>`;
+                    return;
+                }
+
+                // Handle no results
+                if (results.length === 0) {
+                    resultsContainer.innerHTML =
+                        '<p class="text-gray-500 text-center">No similar text found in the corpus for the given query.</p>';
+                    return;
+                }
+
+                // Display results
+                results.forEach((item) => {
+                    const card = document.createElement("div");
+                    card.className = "p-4 border rounded-lg shadow-lg mb-4 bg-white space-y-2";
+
+                    card.innerHTML = `
+                        <!-- Similarity and Method as floating tags -->
+                        <div class="mt-2 flex items-center space-x-3">
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Similarity: ${(item.similarity_score).toFixed(2)}%</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Method: ${item.method.charAt(0).toUpperCase() + item.method.slice(1)}</span>
+                        </div>
+
+                        <p class="text-lg font-semibold text-indigo-600">
+                            <span class="text-gray-600">Chunk ID:</span> ${item.chunk_id}
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            <strong class="text-indigo-600">Chunk Content:</strong> ${item.chunk}
+                        </p>
+
+                            <!-- Source and Other Chunks in Source on the same line -->
+                        <div class="mt-2 flex items-center justify-between">
+                            <p class="text-gray-700">
+                                <strong class="text-blue-600">Source:</strong>
+                                <a href="${item.source}" target="_blank" class="text-indigo-600 underline hover:text-indigo-800">${item.source}</a>
+                            </p>
+                            <p class="text-gray-700">
+                                <strong class="text-blue-600">Other Chunks in Source:</strong>
+                                <span class="text-gray-700">${item.chunk_count}</span>
+                            </p>
+                        </div>
+                    `;
+
+                    resultsContainer.appendChild(card);
+                });
+            } catch (err) {
+                console.error("Error performing search:", err);
+                resultsContainer.innerHTML =
+                    '<p class="text-red-500 text-center">An error occurred while performing the search. Please try again later.</p>';
+            }
+        });
+
+        // Load Corpus on Page Load
+        fetchCorpus();
+    </script>
+</body>
+
+</html>
