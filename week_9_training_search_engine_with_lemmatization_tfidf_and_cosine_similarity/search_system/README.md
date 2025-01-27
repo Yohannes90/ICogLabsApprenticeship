@@ -54,7 +54,7 @@ search_system/
 
    ```bash
    git clone https://github.com/Yohannes90/training.git
-   cd ./week_9_training_search_engine_with_lemmatization_tfidf_and_cosine_similarity/search_system
+   cd ./training/week_9_training_search_engine_with_lemmatization_tfidf_and_cosine_similarity/search_system
    ```
 
 2. Create and activate a virtual environment:
@@ -120,7 +120,3 @@ search_system/
 ## Conclusion
 
 This project demonstrates the creation of a corpus management system with semantic search capabilities. It highlights skills in web development, text processing, and integrating machine learning techniques for improved content retrieval. The system provides an efficient way to manage and search large text corpora, making it useful for a variety of applications involving large datasets and document analysis.
-
-
-
-
