@@ -19,9 +19,11 @@
 ; to print list
 (= (show Nil) ())
 (= (show (Cons $x $xs))
-    ($x (show $xs))
+    (let $a (show $xs)
+        (cons-atom $x $a)
+    )
 )
-! (show (myList)) ; [(42 (75 (32 (23 (432 (35 (94 (16 ()))))))))]
+! (show (myList)) ; [(42 75 32 23 432 35 94 16 23)]
 
 
 ; to get first values of list
@@ -105,7 +107,7 @@
 (= (map $func (Cons $x $xs))
     (Cons ($func $x) (map $func $xs))
 )
-! (show (myList)) ; [(42 (75 (32 (23 (432 (35 (94 (16 (23 ())))))))))]
+! (show (myList)) ; [(42 75 32 23 432 35 94 16 23)]
 ! (map add2 (myList)) ; [(Cons 44 (Cons 77 (Cons 34 (Cons 25 (Cons 434 (Cons 37 (Cons 96 (Cons 18 (Cons 25 Nil)))))))))]
 
 
@@ -118,7 +120,7 @@
     (filter $func $xs)
     )
 )
-! (show (myList)) ; [(42 (75 (32 (23 (432 (35 (94 (16 (23 ())))))))))]
+! (show (myList)) ; [(42 75 32 23 432 35 94 16 23)]
 ! (filter lessThan40 (myList)) ; [(Cons 32 (Cons 23 (Cons 35 (Cons 16 (Cons 23 Nil)))))]
 
 

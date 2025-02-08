@@ -122,7 +122,9 @@ The following code provides context on type definitions, helper functions, and b
   ```metta
     (= (show Nil) ())
     (= (show (Cons $x $xs))
-        ($x (show $xs))
+      (let $a (show $xs)
+        (cons-atom $x $a)
+      )
     )
   ```
 
