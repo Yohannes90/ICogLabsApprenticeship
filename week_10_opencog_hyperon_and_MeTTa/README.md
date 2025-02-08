@@ -71,17 +71,20 @@ MeTTa provides multiple mechanisms for graph rewriting:
 
 ### **Different Strategies for Graph Rewriting**
 1. **Direct Pattern Matching with `match`**
-   - Matches subgraphs and applies transformations using `remove-atom` and `add-atom`.
+   - This method uses the `match` function to identify subgraphs and rewrite them using `remove-atom` and `add-atom`.
+   - It is suitable for simple transformations where patterns are known in advance.
 
 2. **Rule-Based Transformations**
-   - Stores graph rewriting rules as atoms, which can be dynamically applied.
+   - Graph rewriting rules can be **stored as atoms** and applied dynamically.
+   - A rule engine can iterate through these rules and apply them as needed.
 
-3. **Learning-Based Rewriting**
-   - Uses machine learning models to guide transformations, enabling adaptive systems.
+3. **Probabilistic or Learning-Based Rewriting**
+   - Instead of predefined rules, **machine learning models** or heuristic functions can determine when and how to apply transformations.
+   - This approach is useful for self-learning systems where the rewriting process adapts over time.
 
-4. **Parallel Rule Execution**
-   - Allows multiple transformations to occur simultaneously.
-   - Synchronization ensures that graph integrity is maintained.
+4. **Parallel Execution of Rewriting Rules**
+   - MeTTa allows multiple matches to be processed in parallel.
+   - This can speed up transformations but may lead to conflicts in rule execution order, requiring additional synchronization mechanisms.
 
 ---
 
@@ -222,7 +225,6 @@ Removes a specific element from the list.
 
 ```metta
 (: remove_element (-> Number List List))
-(= (remove_element $y ()) ())
 (= (remove_element $y Nil) Nil)
 (= (remove_element $y (Cons $x $xs))
     (if (== $y $x)
@@ -244,7 +246,6 @@ Applies a function to each element in the list and returns a new list.
 
 ```metta
 (: map (-> (-> Number Number) List List))
-(= (map $func ()) ())
 (= (map $func Nil) Nil)
 (= (map $func (Cons $x $xs))
     (Cons ($func $x) (map $func $xs))
@@ -262,7 +263,6 @@ Filters the list based on a predicate function.
 
 ```metta
 (: filter (-> (-> Number Bool) List List))
-(= (filter $func ()) ())
 (= (filter $func Nil) Nil)
 (= (filter $func (Cons $x $xs))
     (if ($func $x)

@@ -86,7 +86,6 @@
 
 ; 8. remove-element
 (: remove (-> Number List List))
-(= (remove $y ()) ())
 (= (remove $y Nil) Nil)
 (= (remove $y (Cons $x $xs))
     (if (== $y $x)
@@ -102,7 +101,6 @@
 
 ; 10. map
 (: map (-> (-> Number Number) List List))
-(= (map $func ()) ())
 (= (map $func Nil) Nil)
 (= (map $func (Cons $x $xs))
     (Cons ($func $x) (map $func $xs))
@@ -113,7 +111,6 @@
 
 ; 11. filter
 (: filter (-> (-> Number Bool) List List))
-(= (filter $func ()) ())
 (= (filter $func Nil) Nil)
 (= (filter $func (Cons $x $xs))
     (if ($func $x)
