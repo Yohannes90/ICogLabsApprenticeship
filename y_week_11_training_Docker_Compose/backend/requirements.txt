@@ -1,0 +1,6 @@
+flask
+Flask-Cors==5.0.0
+joblib==1.4.2
+numpy
+pandas
+requests==2.32.3
