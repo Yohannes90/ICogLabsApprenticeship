@@ -37,14 +37,8 @@ Each service has its own `Dockerfile` to containerize the application.
 |   |   |-- best_decision_tree_model.pkl
 |   |   |-- car_evaluation.csv
 |   |   `-- DecisionTreeCarEvaluation.ipynb
-|   |-- README.md
 |   `-- requirements.txt
-|-- screenshots
-|   |-- screenshot_frontend_displaying_two_successful_requests_on_prediction_history.png
-|   |-- screenshot_output_of_running_sudo_docker-compose_build.png
-|   |-- screenshot_output_of_running_sudo_docker-compose_up_and_successful_requests.png
-|   `-- screenshot_running_with_docker_compose.png
-`-- tempUi.jsx
+`-- README.md
 ```
 
 ## Prerequisites
