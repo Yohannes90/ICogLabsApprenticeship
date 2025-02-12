@@ -111,9 +111,9 @@ services:
 ```
 
 ## Technologies Used
-- **Frontend:** React (Vite), Tailwind CSS
-- **Backend:** Flask
-- **ML Service:** Flask, Scikit-learn (Decision Tree Model)
+- **Frontend:** Javascript, React (Vite), Tailwind CSS
+- **Backend:** Python, Flask, requests
+- **ML Service:** Python, Flask, notebook, numpy, pandas, Scikit-learn (Decision Tree Model), joblib
 - **Docker & Docker Compose**
 
 ## Conclusion
